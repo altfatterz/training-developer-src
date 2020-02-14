@@ -1,4 +1,5 @@
-{"namespace": "solution.model",
+{
+    "namespace": "solution.model",
     "type": "record",
     "name": "PositionValue",
     "fields": [

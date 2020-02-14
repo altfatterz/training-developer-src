@@ -13,17 +13,18 @@ import solution.model.PositionKey;
 import solution.model.PositionValue;
 
 public class VehiclePositionConsumer {
+
     public static void main(String[] args) {
         System.out.println("*** Starting VP Consumer Avro ***");
         
         Properties settings = new Properties();
         settings.put(ConsumerConfig.GROUP_ID_CONFIG, "vp-consumer-avro");
-        settings.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, "kafka:9092");
+        settings.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, "localhost:19092");
         settings.put(ConsumerConfig.AUTO_OFFSET_RESET_CONFIG, "earliest");
         settings.put(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, KafkaAvroDeserializer.class);
         settings.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, KafkaAvroDeserializer.class);
         settings.put(KafkaAvroDeserializerConfig.SPECIFIC_AVRO_READER_CONFIG, "true");
-        settings.put(KafkaAvroDeserializerConfig.SCHEMA_REGISTRY_URL_CONFIG, "http://schema-registry:8081");
+        settings.put(KafkaAvroDeserializerConfig.SCHEMA_REGISTRY_URL_CONFIG, "http://localhost:8081");
 
         KafkaConsumer<PositionKey, PositionValue> consumer = new KafkaConsumer<>(settings);
         try {

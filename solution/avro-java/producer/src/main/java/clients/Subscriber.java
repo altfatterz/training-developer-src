@@ -53,12 +53,10 @@ public class Subscriber implements MqttCallback {
 
     public void messageArrived(String topic, MqttMessage message) throws MqttException {
         try {
-            System.out.println(String.format("[%s] %s", 
-                    topic, new String(message.getPayload())));
+            System.out.println(String.format("[%s] %s", topic, new String(message.getPayload())));
             final PositionKey key = new PositionKey(topic);
             final PositionValue value = getPositionValue(message.getPayload());
-            final ProducerRecord<PositionKey, PositionValue> record = 
-                    new ProducerRecord<>(this.kafka_topic, key, value);
+            final ProducerRecord<PositionKey, PositionValue> record = new ProducerRecord<>(this.kafka_topic, key, value);
             producer.send(record);
         } catch (Exception e) {
             //TODO: handle exception

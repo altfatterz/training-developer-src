@@ -17,10 +17,10 @@ public class VehiclePositionProducer {
 
         Properties settings = new Properties();
         settings.put(ProducerConfig.CLIENT_ID_CONFIG, "vp-producer-avro");
-        settings.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, "kafka:9092");
+        settings.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, "localhost:19092");
         settings.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, KafkaAvroSerializer.class);
         settings.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, KafkaAvroSerializer.class);
-        settings.put(KafkaAvroSerializerConfig.SCHEMA_REGISTRY_URL_CONFIG, "http://schema-registry:8081");
+        settings.put(KafkaAvroSerializerConfig.SCHEMA_REGISTRY_URL_CONFIG, "http://localhost:8081");
 
         final KafkaProducer<PositionKey, PositionValue> producer = new KafkaProducer<>(settings);
         

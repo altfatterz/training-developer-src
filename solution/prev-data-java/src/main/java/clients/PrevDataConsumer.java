@@ -18,7 +18,7 @@ public class PrevDataConsumer {
         
         Properties settings = new Properties();
         settings.put(ConsumerConfig.GROUP_ID_CONFIG, "prev-data-consumer");
-        settings.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, "kafka:9092");
+        settings.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, "localhost:19092");
         settings.put(ConsumerConfig.AUTO_OFFSET_RESET_CONFIG, "earliest");
         settings.put(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class);
         settings.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class);
@@ -33,6 +33,7 @@ public class PrevDataConsumer {
             
             @Override
             public void onPartitionsAssigned(Collection<TopicPartition> partitions) {
+                System.out.println("Topic partitions: " + partitions);
                 consumer.seekToBeginning(partitions);
             }
         };
@@ -42,9 +43,11 @@ public class PrevDataConsumer {
 
             while (true) {
                 ConsumerRecords<String, String> records = consumer.poll(Duration.ofMillis(100));
-                for (ConsumerRecord<String, String> record : records)
-                    System.out.printf("partition = %d, offset = %d, key = %s, value = %s\n", 
-                        record.partition(), record.offset(), record.key(), record.value());
+                System.out.println("Number of records received in 100 ms: " + records.count());
+                for (ConsumerRecord<String, String> record : records) {
+//                    System.out.printf("partition = %d, offset = %d, key = %s, value = %s\n",
+//                            record.partition(), record.offset(), record.key(), record.value());
+                }
             }
         }
         finally{

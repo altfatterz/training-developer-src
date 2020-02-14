@@ -1,8 +1,13 @@
-{"namespace": "solution.model",
-    "type": "record",
-    "name": "PositionKey",
-    "fields": [
-        {"name": "topic", "type": "string", "doc" : "The topic of the vehicle position"}
-    ]
+{
+  "namespace": "solution.model",
+  "type": "record",
+  "name": "PositionKey",
+  "fields": [
+    {
+      "name": "topic",
+      "type": "string",
+      "doc": "The topic of the vehicle position"
+    }
+  ]
 }
    

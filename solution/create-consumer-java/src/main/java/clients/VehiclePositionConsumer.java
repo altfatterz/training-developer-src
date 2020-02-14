@@ -15,7 +15,7 @@ public class VehiclePositionConsumer {
         
         Properties settings = new Properties();
         settings.put(ConsumerConfig.GROUP_ID_CONFIG, "vp-consumer");
-        settings.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, "kafka:9092");
+        settings.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, "localhost:19092");
         settings.put(ConsumerConfig.AUTO_OFFSET_RESET_CONFIG, "earliest");
         settings.put(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class);
         settings.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class);
@@ -26,6 +26,7 @@ public class VehiclePositionConsumer {
 
             while (true) {
                 ConsumerRecords<String, String> records = consumer.poll(Duration.ofMillis(100));
+                System.out.println("Number of records received in 100 ms: " + records.count());
                 for (ConsumerRecord<String, String> record : records)
                     System.out.printf("offset = %d, key = %s, value = %s\n", record.offset(), record.key(), record.value());
             }
@@ -34,5 +35,7 @@ public class VehiclePositionConsumer {
             System.out.println("*** Ending VP Consumer ***");
             consumer.close();
         }
+
+        // kafka-consumer-groups --bootstrap-server localhost:19092 --group vp-consumer --topic vehicle-positions --reset-offsets --to-earliest --execute
     }
 }
