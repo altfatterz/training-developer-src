@@ -1,5 +1,5 @@
 
-Creates a custom connect image installing the syslog connector (see connect/Dockerfile)
+Creates a custom connect image installing the `syslog` connector (see `connect/Dockerfile`)
 
 ```bash
 $ cd ~/confluent-dev/labs/using-syslog-connector

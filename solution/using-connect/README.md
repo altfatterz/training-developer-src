@@ -1,4 +1,4 @@
-```hsqldb
+```bash
 $ cd /training-developer-src/labs
 $ docker-compose up -d
 ```
