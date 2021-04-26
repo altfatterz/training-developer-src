@@ -175,7 +175,7 @@ services:
       KAFKA_REST_CUB_KAFKA_TIMEOUT: 180 # https://github.com/confluentinc/cp-docker-images/issues/807
 
   ksqldb-server:
-    image: confluentinc/cp-ksqldb-server:6.0.0-1-ubi8
+    image: confluentinc/cp-ksqldb-server:6.1.0-1-ubi8
     restart: always
     container_name: ksqldb-server
     ports:
@@ -224,7 +224,7 @@ services:
       CONNECT_VALUE_CONVERTER_SCHEMA_REGISTRY_URL: "http://schema-registry:8081"
       CONNECT_INTERNAL_KEY_CONVERTER: "org.apache.kafka.connect.json.JsonConverter"
       CONNECT_INTERNAL_VALUE_CONVERTER: "org.apache.kafka.connect.json.JsonConverter"
-      CONNECT_PLUGIN_PATH: /usr/share/java
+      CONNECT_PLUGIN_PATH: /usr/share/java,/usr/share/confluent-hub-components
       CONNECT_REST_ADVERTISED_HOST_NAME: "connect"
       CONNECT_PRODUCER_INTERCEPTOR_CLASSES: io.confluent.monitoring.clients.interceptor.MonitoringProducerInterceptor
       CONNECT_CONSUMER_INTERCEPTOR_CLASSES: io.confluent.monitoring.clients.interceptor.MonitoringConsumerInterceptor
@@ -268,6 +268,20 @@ services:
       kafka-topics --bootstrap-server kafka:9092 --create --topic _confluent-monitoring --partitions 12 --replication-factor 1 --config retention.ms=259200000 --config message.timestamp.type=LogAppendTime ;
       true'
 
+
+  rest-proxy:
+    image: confluentinc/cp-kafka-rest:6.0.0-1-ubi8
+    container_name: rest-proxy
+    depends_on:
+      - kafka
+      - schema-registry
+    ports:
+      - 8082:8082
+    environment:
+      KAFKA_REST_BOOTSTRAP_SERVERS: kafka:9092
+      KAFKA_REST_LISTENERS: "http://0.0.0.0:8082"
+      KAFKA_REST_SCHEMA_REGISTRY_URL: "http://schema-registry:8081"
+  
 
   tools:
     image: cnfltraining/training-tools:6.0
