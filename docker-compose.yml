@@ -175,7 +175,7 @@ services:
       KAFKA_REST_CUB_KAFKA_TIMEOUT: 180 # https://github.com/confluentinc/cp-docker-images/issues/807
 
   ksqldb-server:
-    image: confluentinc/cp-ksqldb-server:6.1.0-1-ubi8
+    image: confluentinc/cp-ksqldb-server:6.0.0-1-ubi8
     restart: always
     container_name: ksqldb-server
     ports:
